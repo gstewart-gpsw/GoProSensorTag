@@ -107,6 +107,9 @@
  * CONSTANTS
  */
 
+#define GOPRO_PACKET_RATE_MS    30     // how often we will send metadata packets
+#define GOPRO_PACKET_COUNT       3     // number of packets to send
+
 // How often to perform sensor reads (milliseconds)
 #define TEMP_DEFAULT_PERIOD                   1000
 #define HUM_DEFAULT_PERIOD                    1000
@@ -758,16 +761,19 @@ if ( events & ST_HRM_TIMER_EVT )
         break;  
          
       case 4:
-     
+  
+        
+//#define GOPRO_PACKET_RATE_MS  1000     // how often we will send metadata packets
+//#define GOPRO_PACKET_COUNT       1     // number of packets to send    
+        
         //only send metadata if there are no pending commands  
         if(failedCmd == 0)
         { 
-          if(sendMeta_Data()==SUCCESS)
-              hrm_counter++;
-          if(sendMeta_Data()==SUCCESS)
-              hrm_counter++;
-          if(sendMeta_Data()==SUCCESS)
-              hrm_counter++;        
+          for(int i=0; i < GOPRO_PACKET_COUNT;i++)
+          {
+            if(sendMeta_Data()==SUCCESS)
+                hrm_counter++;
+          }
         }
         break;
         
@@ -776,13 +782,13 @@ if ( events & ST_HRM_TIMER_EVT )
         
     }   
     
-    if(hrm_counter >= 0xFFFFFFFF)
+    if(hrm_counter >= 0xFFFF)
     {
         hrm_counter = 0;
     }
     
     //send data every x ms
-    osal_start_timerEx( sensorTag_TaskID, ST_HRM_TIMER_EVT, 30 ); 
+    osal_start_timerEx( sensorTag_TaskID, ST_HRM_TIMER_EVT, GOPRO_PACKET_RATE_MS ); 
     
     return ( events ^ ST_HRM_TIMER_EVT );
   }
