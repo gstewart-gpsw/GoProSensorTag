@@ -2,9 +2,7 @@
 SensorTag with GoPro Compatible GATT table
 
 
-=================================
-GoPro Sensortag Build Insructions
-=================================
+#GoPro Sensortag Build Insructions
 
 1. Download TI Stack
 BLE-STACK-CC25X: Version 1.4.0
@@ -22,30 +20,28 @@ IAR Compiler
 File/Open/Open Workspace
 C:\..\BLE-CC254x-1.4.0\Projects\ble\SensorTag - GoPro\CC2541DB\SensorTag.eww
 
-5.Build Project
+5. Build Project
 Project>Rebuild All
 
 6. Download to Sensortag  using CC Debugger
 Project > Download and Debug
 
-===========
-Operation
-===========
+#Operation
 Side Button
-->Start/Stop Advertising when not connected
-->Start/Stop Metadata when connected
+..Start/Stop Advertising when not connected
+..Start/Stop Metadata when connected
 
 Right Top Button
--> Start/Stop shutter
+..Start/Stop shutter
 
 Left Top Button
--> Change mode
+..Change mode
 
-====================
-Program Modification
-===================
-#define GOPRO_PACKET_RATE_MS  1000     // how often we will send metadata packets
-#define GOPRO_PACKET_COUNT       1     // number of packets to send
+#Program Modification
+
+..GOPRO_PACKET_RATE_MS  1000     // how often we will send metadata packets
+
+..GOPRO_PACKET_COUNT       1     // number of packets to send
 
 Modify Metadata Payload
 See GoPro BLE SDK guide for information on 4CC formats
